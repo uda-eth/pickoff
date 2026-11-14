@@ -674,7 +674,7 @@ body:has(#proof.immersive) #demo{display:none}
         <p class="lp-sub">Your AI agents hold your keys and read text written by strangers. Pickoff covers every agent you run and picks off attacks before they reach your data.</p>
         <div class="lp-cta">
           <button class="lp-btn" type="button" onclick="startConnect()">Cover my agents</button>
-          <button class="lp-cmd" type="button" data-lp-copy="npx pickoff connect"><span>$ npx pickoff connect</span><em>Copy</em></button>
+          <button class="lp-cmd" type="button" data-lp-copy="npx github:uda-eth/pickoff"><span>$ npx github:uda-eth/pickoff</span><em>Copy</em></button>
         </div>
         <div class="lp-facts"><span>Read-only</span><span>Runs on your machine</span><span>Every fix has an undo</span></div>
       </div>
@@ -771,7 +771,7 @@ body:has(#proof.immersive) #demo{display:none}
         </ul>
         <div class="lp-cta">
           <button class="lp-btn" type="button" onclick="startConnect()">Scan my stack</button>
-          <button class="lp-cmd" type="button" data-lp-copy="npx pickoff connect"><span>$ npx pickoff connect</span><em>Copy</em></button>
+          <button class="lp-cmd" type="button" data-lp-copy="npx github:uda-eth/pickoff"><span>$ npx github:uda-eth/pickoff</span><em>Copy</em></button>
         </div>
       </div>
       <div class="lp-stage" id="lpStage" data-lp-reveal>
@@ -864,7 +864,7 @@ body:has(#proof.immersive) #demo{display:none}
       <h2>Who’s covering<br><span>your agents?</span></h2>
       <div class="lp-cta lp-center">
         <button class="lp-btn" type="button" onclick="startConnect()">Cover my agents</button>
-        <button class="lp-cmd" type="button" data-lp-copy="npx pickoff connect"><span>$ npx pickoff connect</span><em>Copy</em></button>
+        <button class="lp-cmd" type="button" data-lp-copy="npx github:uda-eth/pickoff"><span>$ npx github:uda-eth/pickoff</span><em>Copy</em></button>
       </div>
       <div class="lp-facts lp-center"><span>Read-only</span><span>Runs on your machine</span><span>Every fix has an undo</span></div>
       <footer class="lp-foot"><div class="logo"><i></i>Pickoff</div><span>Hackathon demo, November 2026. Acme Labs and its data are fictional.</span></footer>
@@ -1245,7 +1245,7 @@ async function tline(txt,cls='',d=260){const el=document.createElement('div');el
 async function startConnect(){
   show('connect');$('#termBody').innerHTML='';$('#consent').classList.add('hidden');$('#scanning').classList.add('hidden');
   await sleep(300);
-  await tline('npx pickoff connect','p',700);
+  await tline('npx github:uda-eth/pickoff','p',700);
   await tline('Looking for services and agents on this machine. Nothing is read yet.','dim',600);
   for(const [n,d] of SERVICES)await tline(n.padEnd(16,' ')+d,'ok',140);
   for(const a of AGENTS)await tline(a.name.padEnd(16,' ')+a.plat,'ag',140);
@@ -1915,7 +1915,7 @@ async function reScan(){
 }
 async function enterLive(){
   LIVE=true;show('connect');$('#termBody').innerHTML='';$('#consent').classList.add('hidden');$('#scanning').classList.add('hidden');
-  await tline('npx pickoff connect','p',500);
+  await tline('npx github:uda-eth/pickoff','p',500);
   await tline('Reading the agent and MCP configs on this machine (read-only)…','dim',500);
   let s;
   try{const h=await api('/api/health');writeAllowed=!!h.allowWrite}catch(e){}
@@ -2154,7 +2154,7 @@ function count(el,n,ms,pre='',suf=''){
   const fmt=v=>pre+Math.round(v).toLocaleString('en-US')+suf;if(reduce){el.textContent=fmt(n);return}
   const t0=performance.now();(function f(now){const u=Math.min(1,(now-t0)/ms);el.textContent=fmt(n*(1-Math.pow(1-u,3)));if(u<1)requestAnimationFrame(f)})(t0);
 }
-const TL=[['$ npx pickoff connect',''],['✓ Claude Code      2 agents','ok'],['✓ Codex cloud      1 task queue','ok'],['✓ Cursor           5 tools','ok'],['✓ Grok Bot         3 routines','ok'],['5 agents covered · read-only','dim']];
+const TL=[['$ npx github:uda-eth/pickoff',''],['✓ Claude Code      2 agents','ok'],['✓ Codex cloud      1 task queue','ok'],['✓ Cursor           5 tools','ok'],['✓ Grok Bot         3 routines','ok'],['5 agents covered · read-only','dim']];
 let termRun=0;
 async function term(){
   const my=++termRun,b=q('#lpTermB');b.textContent='';

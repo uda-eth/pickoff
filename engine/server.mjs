@@ -2,11 +2,11 @@
 // reversible hardening fix. Localhost only. Node built-ins only.
 //
 //   node engine/server.mjs            # http://127.0.0.1:8777  (read-only by default)
-//   VIGIL_ALLOW_WRITE=1 node ...      # enables the apply/undo endpoints
+//   PICKOFF_ALLOW_WRITE=1 node ...      # enables the apply/undo endpoints
 //
 // Safety: apply always makes a timestamped backup first, moves the secret into the
 // macOS Keychain, and can be undone. Nothing is written outside ~/.vigil except the
-// one config file being hardened, and only when commit=1 AND VIGIL_ALLOW_WRITE=1.
+// one config file being hardened, and only when commit=1 AND PICKOFF_ALLOW_WRITE=1.
 
 import http from 'node:http';
 import fs from 'node:fs';
@@ -19,7 +19,7 @@ const DIR = path.dirname(new URL(import.meta.url).pathname);
 const SCAN_JSON = (() => { const d = path.join(os.homedir(), '.pickoff'); try { fs.mkdirSync(d, { recursive: true }); } catch {} return path.join(d, 'scan.json'); })();
 const VIGIL = path.join(H, '.vigil');
 const BK = path.join(VIGIL, 'backups');
-const ALLOW_WRITE = (process.env.PICKOFF_ALLOW_WRITE==='1'||process.env.VIGIL_ALLOW_WRITE==='1');
+const ALLOW_WRITE = (process.env.PICKOFF_ALLOW_WRITE==='1'||process.env.PICKOFF_ALLOW_WRITE==='1');
 const PORT = +(process.env.PORT || 8777);
 const tilde = p => p.replace(H, '~');
 const expand = p => p.replace(/^~/, H);
@@ -68,7 +68,7 @@ function applyFix(id, commit) {
   return { ok: false, error: 'not auto-fixable; this finding has a manual guide' };
 }
 function applyChmod(id, ax) {
-  if (!ALLOW_WRITE) return { ok: false, error: 'read-only mode — start the server with VIGIL_ALLOW_WRITE=1' };
+  if (!ALLOW_WRITE) return { ok: false, error: 'read-only mode — start the server with PICKOFF_ALLOW_WRITE=1' };
   const file = expand(ax.file);
   let st; try { st = fs.statSync(file); } catch { return { ok: false, error: 'cannot read ' + ax.file }; }
   const from = (st.mode & 0o777).toString(8);

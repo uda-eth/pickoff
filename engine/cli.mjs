@@ -49,7 +49,7 @@ for (const f of findings) {
 }
 console.log('');
 
-if (scanOnly) { console.log(dim(`Run ${bold('vigil')}${dim(' to open the dashboard.')}`)); process.exit(0); }
+if (scanOnly) { console.log(dim(`Run ${bold('pickoff')}${dim(' to open the dashboard.')}`)); process.exit(0); }
 
 /* ---- serve + open ---- */
 const freePort = pref => new Promise(res => {
@@ -59,7 +59,7 @@ const freePort = pref => new Promise(res => {
 });
 const port = portArg || (await freePort(8777)) || (await freePort(0));
 const env = { ...process.env, PORT: String(port) };
-if (fix) env.VIGIL_ALLOW_WRITE = '1';
+if (fix) env.PICKOFF_ALLOW_WRITE = '1';
 const srv = spawn(process.execPath, [path.join(DIR, 'server.mjs')], { env, stdio: ['ignore', 'ignore', 'inherit'] });
 const url = `http://127.0.0.1:${port}/?live`;
 await new Promise(r => setTimeout(r, 500));
