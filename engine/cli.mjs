@@ -8,9 +8,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import net from 'node:net';
+import os from 'node:os';
 import { execFileSync, spawn } from 'node:child_process';
 
 const DIR = path.dirname(new URL(import.meta.url).pathname);
+const SCAN_JSON = (() => { const d = path.join(os.homedir(), '.pickoff'); try { fs.mkdirSync(d, { recursive: true }); } catch {} return path.join(d, 'scan.json'); })();
 const A = process.argv.slice(2);
 const has = f => A.includes(f);
 const scanOnly = has('--scan'), noOpen = has('--no-open'), fix = has('--fix') || has('--allow-write'), jsonOut = has('--json');
@@ -27,7 +29,7 @@ process.stdout.write(`\n${bold('Pickoff')} ${dim('— scanning this Mac…')} `)
 try { execFileSync(process.execPath, [path.join(DIR, 'scan.mjs')], { stdio: 'ignore' }); }
 catch (e) { console.log(red('failed')); console.error(dim(String(e.message))); process.exit(1); }
 let scan;
-try { scan = JSON.parse(fs.readFileSync(path.join(DIR, 'scan.json'), 'utf8')); }
+try { scan = JSON.parse(fs.readFileSync(SCAN_JSON, 'utf8')); }
 catch (e) { console.log(red('failed to read scan output')); process.exit(1); }
 console.log(`done ${dim(`(${((Date.now() - t0) / 1000).toFixed(1)}s)`)}`);
 

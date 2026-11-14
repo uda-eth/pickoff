@@ -6,7 +6,8 @@ import { fileURLToPath } from 'node:url';
 import { HOME, rel, exists, readJSON, readText, mask, classify, classifyArg, walk, parseToml, dir } from './lib.mjs';
 import { scanUniversal } from './universal.mjs';
 
-const OUT = path.join(path.dirname(fileURLToPath(import.meta.url)), 'scan.json');
+const PKDIR = path.join(os.homedir(), '.pickoff'); try { fs.mkdirSync(PKDIR, { recursive: true }); } catch {}
+const OUT = path.join(PKDIR, 'scan.json');
 const F = {
   cursor: dir('.cursor', 'mcp.json'),
   codex: dir('.codex', 'config.toml'),

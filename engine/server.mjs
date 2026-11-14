@@ -9,7 +9,6 @@
 // one config file being hardened, and only when commit=1 AND VIGIL_ALLOW_WRITE=1.
 
 import http from 'node:http';
-import { sendSms, DEMO_TEXT } from './sms.mjs';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -17,6 +16,7 @@ import { execFile, execFileSync } from 'node:child_process';
 
 const H = os.homedir();
 const DIR = path.dirname(new URL(import.meta.url).pathname);
+const SCAN_JSON = (() => { const d = path.join(os.homedir(), '.pickoff'); try { fs.mkdirSync(d, { recursive: true }); } catch {} return path.join(d, 'scan.json'); })();
 const VIGIL = path.join(H, '.vigil');
 const BK = path.join(VIGIL, 'backups');
 const ALLOW_WRITE = (process.env.PICKOFF_ALLOW_WRITE==='1'||process.env.VIGIL_ALLOW_WRITE==='1');
@@ -42,7 +42,7 @@ const FIXABLE = {
 const mask = v => (v && v.length > 6 ? v.slice(0, 4) + '…' : '••••');
 function runScan() {
   try { execFileSync(process.execPath, [path.join(DIR, 'scan.mjs')], { stdio: 'ignore' }); } catch {}
-  return JSON.parse(fs.readFileSync(path.join(DIR, 'scan.json'), 'utf8'));
+  return JSON.parse(fs.readFileSync(SCAN_JSON, 'utf8'));
 }
 function newestBackup(id) {
   try {
@@ -59,7 +59,7 @@ function keychainDel(service) {
 
 /* ---------- apply (real, reversible) ---------- */
 function loadFinding(id) {
-  try { return JSON.parse(fs.readFileSync(path.join(DIR, 'scan.json'), 'utf8')).findings.find(f => f.id === id); } catch { return null; }
+  try { return JSON.parse(fs.readFileSync(SCAN_JSON, 'utf8')).findings.find(f => f.id === id); } catch { return null; }
 }
 function applyFix(id, commit) {
   if (FIXABLE[id]) return applyTokenFix(id, commit);
@@ -166,15 +166,10 @@ const server = http.createServer(async (req, res) => {
       const b = await readBody(req);
       return send(res, 200, undoFix(b.id));
     }
-    if (u.pathname === '/api/notify' && req.method === 'POST') {
-      // Dry run unless the body says {"send":true} AND PICKOFF_DEMO_PHONE is set.
-      const b = await readBody(req);
-      return send(res, 200, await sendSms(process.env.PICKOFF_DEMO_PHONE || '', b.body || DEMO_TEXT, { send: !!b.send && !!process.env.PICKOFF_DEMO_PHONE }));
-    }
     send(res, 404, { error: 'not found' });
   } catch (e) { send(res, 500, { error: String(e.message || e) }); }
 });
 server.listen(PORT, '127.0.0.1', () => {
-  console.log(`Pickoff server on http://127.0.0.1:${PORT}  (writes ${ALLOW_WRITE ? 'ENABLED' : 'disabled — set VIGIL_ALLOW_WRITE=1 to enable apply/undo'})`);
+  console.log(`Pickoff server on http://127.0.0.1:${PORT}  (writes ${ALLOW_WRITE ? 'ENABLED' : 'disabled — set PICKOFF_ALLOW_WRITE=1 to enable apply/undo'})`);
   console.log(`Dashboard (live):  http://127.0.0.1:${PORT}/?live`);
 });
