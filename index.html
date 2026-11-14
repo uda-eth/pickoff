@@ -410,6 +410,46 @@ details.act summary::-webkit-details-marker{display:none}
 .flag.ok{background:var(--surface)}
 @media (max-width:720px){.land h1{font-size:60px}.sec-t h2{font-size:32px}}
 @media (max-width:480px){.land h1{font-size:50px}}
+/* ---------- immersive fix flow ---------- */
+#proof.immersive{display:block;padding:0;overflow:auto;background:radial-gradient(1100px 620px at 78% -8%,rgba(198,242,78,.16),transparent 62%),#0b100d;animation:fxIn .4s ease}
+#proof.immersive .pf{width:100%;max-width:none;max-height:none;min-height:100%;margin:0;padding:22px max(32px,calc((100vw - 1240px)/2)) 26px;background:none;border-radius:0;color:#edf1ea;display:flex;flex-direction:column;overflow:visible;animation:none}
+.fxm-top{display:flex;align-items:center;gap:20px}
+.fxm-top .logo{color:#f7f8f3}
+.fxm-stages{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap}
+.fxm-stages span{font-size:11.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;padding:7px 12px;border-radius:99px;border:1px solid rgba(255,255,255,.14);color:#7f8a82;transition:all .3s}
+.fxm-stages span.on{background:var(--lime);border-color:var(--lime);color:#0b100d}
+.fxm-stages span.done{border-color:rgba(198,242,78,.45);color:var(--lime)}
+#proof.immersive .close{color:#a9b5ac;width:22px;height:22px;flex:none}
+.fxm-head{margin-top:30px}
+.fxm-head .label{color:var(--lime)}
+.fxm-head h3{font-family:var(--display);font-weight:700;font-size:46px;line-height:1;text-transform:uppercase;letter-spacing:0;color:#f7f8f3;margin-top:8px}
+.fxm-head p{font-size:15.5px;color:#a9b5ac;margin-top:10px;max-width:780px}
+.fxm-body{display:grid;grid-template-columns:290px 1fr;gap:16px;margin-top:24px;flex:1}
+.fxm-steps{background:#141c17;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:18px 18px 20px;align-self:start}
+.fxm-steps .label{color:#7f8a82}
+#fxSteps{list-style:none;margin-top:14px;display:grid;gap:12px}
+#fxSteps li{display:grid;grid-template-columns:20px 1fr;gap:10px;font-size:13.5px;line-height:1.4;color:#7f8a82;transition:color .25s}
+#fxSteps li::before{content:"";width:16px;height:16px;border-radius:50%;border:1.5px solid #3b4a41;margin-top:1px;box-sizing:border-box}
+#fxSteps li.run{color:#f7f8f3}
+#fxSteps li.run::before{border-color:var(--lime);border-top-color:transparent;animation:spin .7s linear infinite}
+#fxSteps li.done{color:#cfd6cd}
+#fxSteps li.done::before{border:0;border-radius:5px;background:var(--lime) var(--mark) center/100% 100% no-repeat}
+.fxm-screens{position:relative}
+#proof.immersive .pf-screens{margin-top:0}
+#proof.immersive .scr{height:420px;border:1px solid rgba(255,255,255,.09)}
+.fxm-stamp{position:absolute;right:6%;top:57%;pointer-events:none;opacity:0;font-family:var(--display);font-weight:700;font-size:70px;line-height:1;text-transform:uppercase;color:var(--lime);text-shadow:0 0 30px rgba(198,242,78,.6);transform:rotate(-8deg) scale(.5)}
+.fxm-stamp.on{animation:fxStamp .7s cubic-bezier(.2,1.5,.3,1) forwards}
+#proof.immersive .pf-ctl{margin-top:18px;min-height:52px}
+#proof.immersive .pf-ctl .st{color:#a9b5ac}
+#proof.immersive .okline{color:var(--lime);font-size:15px}
+#proof.immersive .spin{border-color:var(--lime);border-top-color:transparent}
+body:has(#proof.immersive) #demo{display:none}
+.path.closed{background:var(--green-bg);border-color:var(--green-line)}
+.path.justfixed{animation:fxGlow 2.8s ease 1}
+@keyframes fxIn{from{opacity:0;transform:scale(1.02)}to{opacity:1;transform:none}}
+@keyframes fxStamp{to{opacity:1;transform:rotate(-8deg) scale(1)}}
+@keyframes fxGlow{0%,60%{box-shadow:0 0 0 4px rgba(198,242,78,.8),0 20px 50px -20px rgba(14,122,69,.6)}100%{box-shadow:0 0 0 0 rgba(198,242,78,0)}}
+@media (max-width:900px){.fxm-body{grid-template-columns:1fr}.fxm-head h3{font-size:36px}}
 /* LP-CSS:START */
 .lp{position:relative;background:var(--bg);color:var(--ink);--lp-ink:#0b100d;--lp-pan:#18211b;--lp-light:#edf1ea;--lp-soft:#a9b5ac;--lp-red:#ff7a59}
 .lp-wrap{max-width:1180px;margin:0 auto;padding:0 28px}
@@ -630,7 +670,6 @@ details.act summary::-webkit-details-marker{display:none}
         </div>
       </div>
       <div class="lp-copy">
-        <div class="lp-pill"><i></i><span>Live coverage, running on this page</span></div>
         <h1>Who’s covering<br><span>your agents?</span></h1>
         <p class="lp-sub">Your AI agents hold your keys and read text written by strangers. Pickoff covers every agent you run and picks off attacks before they reach your data.</p>
         <div class="lp-cta">
@@ -1179,7 +1218,7 @@ function mmss(s){return '0:'+String(Math.round(s)).padStart(2,'0')}
 function F(id){return S.findings.find(f=>f.id===id)}
 function score(){const sum=S.findings.filter(f=>f.status!=='fixed').reduce((a,f)=>a+PTS[f.sev],0);return Math.max(0,Math.min(100,100-Math.round(sum*0.6)))}
 function openOnes(){return S.findings.filter(f=>f.status!=='fixed').sort((a,b)=>SEV_RANK[a.sev]-SEV_RANK[b.sev]||(a.src==='only'?0:1)-(b.src==='only'?0:1))}
-function toast(msg){const t=$('#toast');t.innerHTML=msg;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('on'),2800)}
+function toast(msg){if(PR&&PR.fix){PR.exit.push(()=>toast(msg));return}const t=$('#toast');t.innerHTML=msg;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('on'),2800)}
 function log(msg,via){S.logs.unshift({tm:now(),msg,via:via||'Pickoff'});if(S.view==='fixes')renderFixes()}
 function cutIndex(p){return p.nodes.findIndex(n=>n.fid&&fx(n.fid))}
 function recIndex(p){return p.nodes.findIndex(n=>n.fid&&F(n.fid)&&!fx(n.fid))}
@@ -1295,13 +1334,13 @@ function renderPaths(){
   $('#v-paths').innerHTML=`<div class="vh"><div><h2>${live?`${live} way${live>1?'s':''} from the outside to your data`:'No open path from the outside to your data'}</h2><p>Each line is a route an attacker can take today. Pickoff ran every one in a sandbox with decoy keys, so you can watch it work. Pick off one link and the route is closed.</p></div></div>`+
   arr.map(p=>{
     const cut=cutIndex(p),rec=recIndex(p),broken=cut>=0,f=!broken&&F(p.nodes[rec].fid),cf=broken&&F(p.nodes[cut].fid);
-    return `<div class="path ${p.isNew&&!broken?'new':''}" id="path-${p.id}">
+    return `<div class="path ${p.isNew&&!broken?'new':''} ${broken?'closed':''} ${S.justFixed===p.id?'justfixed':''}" id="path-${p.id}">
       <div class="ph"><div><div class="label">Path ${pathNo(p)}${p.isNew&&!broken?' · new':''}</div><h3>${esc(p.title)}</h3><div class="gets">${broken?'No longer reachable: ':'What they get: '}${esc(p.gets)}</div></div>
-        ${broken?`<span class="tagx green">Closed. Proven blocked</span>`:`<span class="tagx red">Proven. Worked in ${p.secs} seconds</span>`}</div>
+        ${broken?`<span class="tagx green">Clear. Proven blocked</span>`:`<span class="tagx red">Proven. Worked in ${p.secs} seconds</span>`}</div>
       ${routeHTML(p.nodes,cut,rec)}
       <div class="plan">${broken
         ?`<div class="todo"><b>Closed by: ${esc(lc(cf.fix.action))}</b><span>${cf.fixedVia==='Auto'?'Closed automatically':'Fixed by '+(cf.fixedVia==='SMS'?'text':'dashboard')} · ${esc(cf.fixedAt)} · Pickoff re-ran the attack and it failed</span></div><div class="acts"><button class="btn sec" onclick="openProof('${p.id}')">${ic('play')}Watch before and after</button></div>`
-        :`<div class="todo"><b>To close it: ${esc(lc(f.fix.action))}</b><span>${MODE[f.fix.mode][0]} · about ${f.fix.eta}${f.status==='pr'?` · ${prRef(f)} is open, waiting for your merge`:''}</span></div><div class="acts"><button class="btn sec" onclick="openProof('${p.id}')">${ic('play')}Watch the proof</button><button class="btn" ${f._busy?'disabled':''} onclick="act('${f.id}')">${nextLabel(f)}</button></div>`}
+        :`<div class="todo"><b>To close it: ${esc(lc(f.fix.action))}</b><span>${MODE[f.fix.mode][0]} · about ${f.fix.eta}${f.status==='pr'?` · ${prRef(f)} is open, waiting for your merge`:''}</span></div><div class="acts"><button class="btn sec" onclick="openProof('${p.id}')">${ic('play')}Watch the proof</button><button class="btn" ${f._busy?'disabled':''} onclick="fixFlow('${f.id}')">${nextLabel(f)}</button></div>`}
       </div></div>`}).join('');
 }
 function goPath(pid){setView('paths');setTimeout(()=>{const el=$('#path-'+pid);if(el)el.scrollIntoView({behavior:'smooth',block:'center'})},50)}
@@ -1421,6 +1460,7 @@ function act(id){
 
 /* ---------- fix engine ---------- */
 function setStep(f,i,cls,text){
+  {const fl=$('#fxSteps');if(fl&&PR&&PR.fix===f.id){const li=fl.children[i];if(li)li.className=cls}}
   if(drawerId===f.id){const li=$('#steps')&&$('#steps').children[i];if(li)li.className=cls}
   const st=$('#proofStatus');if(st&&PR&&cls==='run'&&pathsOf(f).some(p=>p.id===PR.pid))st.innerHTML=`<i class="spin"></i>${esc(text)}`;
 }
@@ -1440,7 +1480,7 @@ async function advanceFix(id,via,{force=false}={}){
       if(!res.ok){f._busy=false;renderAll();refreshDrawer();if($('#fixStatus'))$('#fixStatus').innerHTML='';toast(res.error||'Could not apply.');return {stage:f.status}}
       log(`Backup saved: ${res.backupDir}`,'Pickoff');
       log(res.committed?`Moved the token to the macOS Keychain and hardened ${res.file}`:`Prepared the hardened ${res.file} and copied the token to the Keychain (not yet swapped — read-only)`,'Pickoff');
-      if(!res.committed){f._busy=false;renderAll();refreshDrawer();toast('Prepared and backed up. Start the server with VIGIL_ALLOW_WRITE=1 to swap the live file.');return {stage:f.status}}
+      if(!res.committed){f._busy=false;renderAll();refreshDrawer();toast('Prepared and backed up. Start the server with PICKOFF_ALLOW_WRITE=1 to swap the live file.');return {stage:f.status}}
       r=markFixed(f,via);return r;
     }
     if(m==='you'){const fs=$('#fixStatus');if(fs&&drawerId===id)fs.innerHTML='<i class="spin"></i>Pickoff is checking';await sleep(1100);log(`Checked: ${lc(f.fix.done)}`,via)}
@@ -1454,7 +1494,7 @@ async function advanceFix(id,via,{force=false}={}){
     {const st=$('#proofStatus');if(st&&PR&&pathsOf(f).some(p=>p.id===PR.pid))st.textContent=r&&r.stage==='pr'?`${prRef(f)} is open with checks passing. Merge it to close the path.`:''}
     if(r&&r.stage==='fixed'){
       if(PR&&r.cut.includes(PR.pid))setTimeout(()=>playProof('after'),350);
-      if(via==='Dashboard')agentSay(`Saw your fix on the dashboard: ${lc(f.fix.done)}.${r.cut.length?' I ran the attack again and it failed.':''} Score ${r.before} → ${r.after}.`,600);
+      if(via==='Dashboard'){const say=()=>agentSay(`Saw your fix on the dashboard: ${lc(f.fix.done)}.${r.cut.length?' I ran the attack again and it failed.':''} Score ${r.before} → ${r.after}.`,600);if(PR&&PR.fix)PR.exit.push(say);else say()}
     }
   }
 }
@@ -1483,7 +1523,8 @@ function screenHTML(p,w){
     <div class="slines" id="lines-${w}"></div><div class="verd" id="verd-${w}"></div><div class="sbar"><i id="bar-${w}"></i></div>
     ${w==='after'?'<div class="wait" id="wait-after"><div><b>Not recorded yet</b>Apply the fix and Pickoff runs the same attack again.</div></div>':''}</div>`;
 }
-function openProof(pid){
+function openProof(pid,opt){
+  if(opt&&opt.fix)return openFix(pid,opt.fix);
   const p=PATHS.find(x=>x.id===pid);if(!p)return;
   PR={pid,token:++PTOK,paused:false};
   $('#proof').innerHTML=`<div class="pf"><div class="pf-head"><div><div class="label">Proof · Path ${pathNo(p)}</div><h3>${esc(p.title)}</h3><p>Pickoff ran this attack against a sandbox copy of your setup, using decoy keys. Nothing real was touched.</p></div><button class="close" onclick="closeProof()">${ic('x')}</button></div>
@@ -1491,9 +1532,67 @@ function openProof(pid){
     <div class="pf-ctl"><button class="btn sec" id="pfPlay" onclick="togglePlay()">Pause</button><div class="st" id="proofStatus"></div><div id="pfCta" style="display:flex;gap:8px;align-items:center"></div></div></div>`;
   $('#proof').classList.add('on');refreshProofCta();playProof();
 }
-function closeProof(){PTOK++;PR=null;$('#proof').classList.remove('on');$('#proof').innerHTML=''}
+function closeProof(){const fxp=PR&&PR.fix?PR:null;PTOK++;PR=null;$('#proof').classList.remove('on','immersive');$('#proof').innerHTML='';if(fxp)afterFixFlow(fxp)}
+
+/* ---------- immersive fix: "Fix now" on a path card ---------- */
+function fixFlow(fid){
+  const f=F(fid),p=f&&PATHS.find(x=>!pathBroken(x)&&x.nodes[recIndex(x)].fid===fid);
+  if(!f||!p||LIVE||f.status==='fixed'||f._busy||f.fix.mode==='you'){act(fid);return}
+  openProof(p.id,{fix:fid});
+}
+function openFix(pid,fid){
+  const p=PATHS.find(x=>x.id===pid),f=F(fid);if(!p||!f)return;
+  closeDrawer();
+  PR={pid,token:++PTOK,paused:false,fix:fid,before:score(),exit:[],cleared:false};
+  const pr=f.fix.mode==='pr',lis=(f.fix.steps||[]).map(x=>`<li class="${f.status==='pr'?'done':''}">${esc(x)}</li>`).join('')+(pr?`<li>Merge ${esc(prRef(f))}</li>`:'')+'<li id="fxRerun">Run the same attack again</li>';
+  $('#proof').innerHTML=`<div class="pf fxm">
+    <div class="fxm-top"><div class="logo"><i></i>Pickoff</div>
+      <div class="fxm-stages"><span id="fxs1" class="on">1 · Fixing</span><span id="fxs2">2 · Running the attack again</span><span id="fxs3">3 · Clear</span></div>
+      <button class="close" onclick="closeProof()" aria-label="Back to the dashboard">${ic('x')}</button></div>
+    <div class="fxm-head"><div class="label">Path ${pathNo(p)} · ${esc(MODE[f.fix.mode][0])}</div><h3>${esc(p.title)}</h3><p id="fxmSub">Pickoff applies the fix, then runs the same attack again in the sandbox to prove it. Your dashboard updates when you go back.</p></div>
+    <div class="fxm-body">
+      <div class="fxm-steps"><div class="label">The fix</div><ol id="fxSteps">${lis}</ol></div>
+      <div class="fxm-screens"><div class="pf-screens">${screenHTML(p,'before')}${screenHTML(p,'after')}</div><div class="fxm-stamp" id="fxmStamp">Picked off</div></div>
+    </div>
+    <div class="pf-ctl"><button class="btn sec" id="pfPlay" onclick="togglePlay()" style="display:none">Pause</button><div class="st" id="proofStatus"></div><div id="pfCta" style="display:flex;gap:14px;align-items:center"></div></div></div>`;
+  $('#proof').classList.add('on','immersive');$('#proof').scrollTop=0;
+  refreshProofCta();runFixFlow(p,f);
+}
+async function runFixFlow(p,f){
+  const my=PR.token=++PTOK;
+  PR.fast=true;await runScreen(p,'before',my);if(!PR||PR.token!==my)return;PR.fast=false;
+  const st=$('#proofStatus');if(st)st.textContent='';
+  fxStage(1);await sleep(700);if(!PR||PR.token!==my)return;
+  advanceFix(f.id,'Dashboard');
+}
+function fxStage(n){
+  for(let i=1;i<=3;i++){const e=$('#fxs'+i);if(e)e.className=i<n?'done':i===n?'on':''}
+  const rr=$('#fxRerun');if(rr)rr.className=n===2?'run':n===3?'done':'';
+}
+function fixFlowDone(p){
+  if(!PR||!PR.fix)return;PR.cleared=true;fxStage(3);
+  const n=p.nodes[cutIndex(p)],sub=$('#fxmSub'),st=$('#proofStatus'),sp=$('#fxmStamp');
+  if(sub)sub.textContent=`Proven. The same attack now stops at ${n.t}. Go back to see your score move.`;
+  if(st)st.textContent='Same attack, same sandbox. The only difference is the fix.';
+  if(sp)sp.classList.add('on');
+  refreshProofCta();
+}
+function afterFixFlow(x){
+  const p=PATHS.find(q=>q.id===x.pid),fixed=!!p&&pathBroken(p);
+  if(S.view!=='paths')setView('paths');$('main').scrollTop=0;
+  if(fixed){
+    S.justFixed=x.pid;shownScore=x.before;renderSummary();renderPaths();
+    setTimeout(()=>{const el=$('#path-'+x.pid);if(el)el.scrollIntoView({behavior:'smooth',block:'center'})},1700);
+    setTimeout(()=>{S.justFixed=null},5200);
+  }
+  x.exit.forEach((fn,i)=>setTimeout(fn,700+i*400));
+}
 function refreshProofCta(){
   if(!PR)return;const p=PATHS.find(x=>x.id===PR.pid),el=$('#pfCta');if(!el)return;
+  if(PR.fix){
+    if(pathBroken(p)){el.innerHTML=PR.cleared?`<span class="okline">Security score ${PR.before} → ${score()}</span><button class="btn lg" id="fxDone" onclick="closeProof()">All clear. Back to the dashboard</button>`:'<span class="okline">Fixed. Running the same attack again.</span>';return}
+    const ff=F(PR.fix);if(ff.fix.mode!=='pr'||ff._busy||ff.status!=='pr'){el.innerHTML='';return}
+  }
   if(pathBroken(p)){const cf=F(p.nodes[cutIndex(p)].fid);el.innerHTML=`<span class="okline">Closed by: ${esc(lc(cf.fix.action))}</span>`;const w=$('#wait-after');if(w)w.remove();return}
   const f=F(p.nodes[recIndex(p)].fid);
   el.innerHTML=`<span class="muted" style="font-size:13px">${esc(f.fix.action)}</span><button class="btn" ${f._busy?'disabled':''} onclick="advanceFix('${f.id}','Dashboard')">${f._busy?'Working…':f.fix.mode==='vigil'?'Fix it and run the attack again':f.status==='pr'?`Merge PR #${f.fix.pr.num} and run it again`:'Open the fix PR'}</button>`;
@@ -1503,14 +1602,16 @@ function togglePlay(){
   if(PR.done){playProof();return}
   PR.paused=!PR.paused;$('#pfPlay').textContent=PR.paused?'Play':'Pause';
 }
-async function tick(my,ms){let e=0;while(e<ms){await sleep(50);if(!PR||PR.token!==my)return false;if(!PR.paused)e+=50}return true}
+async function tick(my,ms){if(PR&&PR.fast)return PR.token===my;let e=0;while(e<ms){await sleep(50);if(!PR||PR.token!==my)return false;if(!PR.paused)e+=50}return true}
 async function playProof(which){
   if(!PR)return;const p=PATHS.find(x=>x.id===PR.pid),my=PR.token=++PTOK;PR.paused=false;PR.done=false;
   $('#pfPlay').textContent='Pause';
+  if(PR.fix&&which==='after')fxStage(2);
   const seq=which?[which]:['before'].concat(pathBroken(p)?['after']:[]);
   for(const w of seq){if(!(await runScreen(p,w,my)))return}
   if(!PR||PR.token!==my)return;
   PR.done=true;$('#pfPlay').textContent='Play again';
+  if(PR.fix&&pathBroken(p)){fixFlowDone(p);return}
   const st=$('#proofStatus');if(st)st.textContent=pathBroken(p)?'Same attack, same sandbox. The only difference is the fix.':'This works today. Apply the fix to record the after.';
 }
 async function runScreen(p,w,my){
@@ -1802,7 +1903,7 @@ function applyScan(s){
 function liveBar(){
   const n=SCAN?SCAN.findings.length:0;
   const applied=S.findings.find(f=>f._live&&f._live.committed);
-  return `<div class="alert" style="border-left-color:var(--ink);border-color:var(--line)"><div><b>Live — scanning this Mac${SCAN&&SCAN.host?' ('+esc(SCAN.host)+')':''}</b><div class="muted" style="font-size:13px">Real read-only scan of your agent configs. ${n} open finding${n===1?'':'s'}.${writeAllowed?'':' Read-only mode — apply/undo need VIGIL_ALLOW_WRITE=1.'}${applied?' Backup at '+esc(applied._live.backupDir)+'.':''}</div></div>${applied?`<button class="btn sec" style="margin-left:auto" onclick="liveUndo('${applied.id}')">Undo</button><button class="btn sec" id="rescanBtn" onclick="reScan()">Re-scan</button>`:`<button class="btn sec" style="margin-left:auto" id="rescanBtn" onclick="reScan()">Re-scan this Mac</button>`}</div>`;
+  return `<div class="alert" style="border-left-color:var(--ink);border-color:var(--line)"><div><b>Live — scanning this Mac${SCAN&&SCAN.host?' ('+esc(SCAN.host)+')':''}</b><div class="muted" style="font-size:13px">Real read-only scan of your agent configs. ${n} open finding${n===1?'':'s'}.${writeAllowed?'':' Read-only mode — apply/undo need PICKOFF_ALLOW_WRITE=1.'}${applied?' Backup at '+esc(applied._live.backupDir)+'.':''}</div></div>${applied?`<button class="btn sec" style="margin-left:auto" onclick="liveUndo('${applied.id}')">Undo</button><button class="btn sec" id="rescanBtn" onclick="reScan()">Re-scan</button>`:`<button class="btn sec" style="margin-left:auto" id="rescanBtn" onclick="reScan()">Re-scan this Mac</button>`}</div>`;
 }
 async function reScan(){
   const b=$('#rescanBtn');if(b){b.disabled=true;b.textContent='Scanning…'}
@@ -1818,7 +1919,7 @@ async function enterLive(){
   await tline('Reading the agent and MCP configs on this machine (read-only)…','dim',500);
   let s;
   try{const h=await api('/api/health');writeAllowed=!!h.allowWrite}catch(e){}
-  try{s=await api('/api/scan')}catch(e){await tline('Could not reach the Pickoff server on 127.0.0.1:8777.','crit',200);await tline('Start it:  VIGIL_ALLOW_WRITE=1 node engine/server.mjs','dim',200);return}
+  try{s=await api('/api/scan')}catch(e){await tline('Could not reach the Pickoff server on 127.0.0.1:8777.','crit',200);await tline('Start it:  pickoff','dim',200);return}
   applyScan(s);S=freshState();S.scanAt=now();
   for(const c of s.connectors||[])await tline(c.name.padEnd(18,' ')+c.detail,c.kind==='agent'?'ag':'ok',90);
   await tline(`\n${s.counts.findings} findings. ${s.counts.paths} paths from the outside to your data. All real, from your machine.`,'crit',300);
