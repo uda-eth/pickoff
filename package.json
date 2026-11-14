@@ -1,0 +1,11 @@
+{
+  "name": "pickoff",
+  "version": "0.1.0",
+  "description": "Read-only security scanner for AI-agent setups (MCP configs, exposed keys, risky permissions) with a local dashboard.",
+  "type": "module",
+  "bin": { "pickoff": "engine/cli.mjs" },
+  "files": ["engine/cli.mjs", "engine/scan.mjs", "engine/universal.mjs", "engine/lib.mjs", "engine/server.mjs", "index.html", "README.md"],
+  "engines": { "node": ">=18" },
+  "keywords": ["security", "ai-agents", "mcp", "scanner", "claude", "cursor", "codex", "secrets", "audit", "cli"],
+  "license": "MIT"
+}
