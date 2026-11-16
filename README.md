@@ -1,6 +1,6 @@
 # Pickoff
 
-**Who's covering your agents?** Pickoff reads the play across the AI agents you run (Claude, Codex, Cursor, Grok Bot, and their MCP tools) and intercepts attacks before they reach your keys. It's a local, read-only security audit of your agent stack.
+**Who's covering your agents?** Pickoff is a local, read-only security audit of the AI agents you run (Claude, Codex, Cursor, Grok Bot, and their MCP tools). It shows every path a prompt injection could take, through an agent, to your keys. It is an audit you run when you want one: it does not run in the background or block attacks live.
 
 **Site:** https://uda-eth.github.io/pickoff/
 

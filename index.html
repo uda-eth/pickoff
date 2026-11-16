@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pickoff</title>
+<title>Pickoff: audit your AI agents</title>
+<meta name="description" content="Pickoff is a read-only audit you run on your own machine. It shows every path a prompt injection could take, through an AI agent, to your keys.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
 <style>
@@ -666,17 +667,17 @@ body:has(#proof.immersive) #demo{display:none}
           <a href="#lp-how" data-lp-jump>How it works</a>
           <a href="#lp-report" data-lp-jump>Scouting report</a>
           <a href="#lp-trust" data-lp-jump>Trust</a>
-          <button class="lp-ghost" type="button" onclick="startConnect()">Sign in</button>
+          <button class="lp-ghost" type="button" onclick="startConnect()">Try the demo</button>
         </div>
       </div>
       <div class="lp-copy">
         <h1>Who’s covering<br><span>your agents?</span></h1>
-        <p class="lp-sub">Your AI agents hold your keys and read text written by strangers. Pickoff covers every agent you run and picks off attacks before they reach your data.</p>
+        <p class="lp-sub">Your AI agents hold your keys and read text written by strangers. Pickoff is a read-only audit you run on your own machine. It shows every path a prompt injection could take, through an agent, to your keys.</p>
         <div class="lp-cta">
-          <button class="lp-btn" type="button" onclick="startConnect()">Cover my agents</button>
+          <button class="lp-btn" type="button" onclick="startConnect()">Try the demo</button>
           <button class="lp-cmd" type="button" data-lp-copy="npx github:uda-eth/pickoff"><span>$ npx github:uda-eth/pickoff</span><em>Copy</em></button>
         </div>
-        <div class="lp-facts"><span>Read-only</span><span>Runs on your machine</span><span>Every fix has an undo</span></div>
+        <div class="lp-facts"><span>Read-only</span><span>Runs on your machine</span><span>Runs only when you run it</span><span>Every fix has an undo</span></div>
       </div>
     </div>
     <div class="lp-hud" id="lpHud">
@@ -700,16 +701,31 @@ body:has(#proof.immersive) #demo{display:none}
     </div>
   </div>
 
+  <section class="lp-sec lp-alt" id="lp-what">
+    <div class="lp-wrap">
+      <div class="lp-eyebrow">What it is</div>
+      <h2>An audit, not a guard.</h2>
+      <p class="lp-lede">You run Pickoff on your own machine when you want a check. It reads how your AI agents are set up and reports the paths an attacker could use to reach your keys. It does not watch your agents or block anything while they work.</p>
+      <div class="lp-vs">
+        <div class="us" data-lp-reveal><h4>What it does today</h4><ul>
+          <li>Finds the AI agents and tools on your machine: Claude, Codex, Cursor, Grok Bot</li><li>Finds the keys they can reach: plain-text tokens, SSH keys, .env files</li><li>Draws each path: untrusted text → agent → key → your data</li><li>Applies the simple fixes for you, like locking a loose key file, with a backup and an undo. The rest come with steps.</li></ul></div>
+        <div data-lp-reveal><h4>Not built yet</h4><ul>
+          <li>Watching your agents while they run</li><li>Holding a risky action before it happens</li><li>Text alerts you answer with one word</li><li>Replaying an attack against your own setup</li></ul></div>
+      </div>
+      <p class="lp-note" data-lp-reveal>The demo on this page is scripted, on a fictional company. It shows the full idea, including the parts that are not built yet.</p>
+    </div>
+  </section>
+
   <section class="lp-sec" id="lp-how">
     <div class="lp-wrap">
       <div class="lp-eyebrow">How it works</div>
-      <h2>Cover. Read. Pick off.</h2>
+      <h2>Scan. See the paths. Fix.</h2>
       <div class="lp-steps">
         <article class="lp-card lp-tilt" data-lp-reveal>
           <div class="lp-vis lp-term" id="lpTerm"><div class="lp-term-b" id="lpTermB"></div></div>
           <div class="lp-n">01</div>
-          <h3>Cover every agent</h3>
-          <p>One command finds the agents and tools on your machine. You approve each one. Read-only.</p>
+          <h3>Scan your machine</h3>
+          <p>One command finds the agents and tools on your machine and the keys they can reach. Read-only.</p>
         </article>
         <article class="lp-card lp-tilt" data-lp-reveal>
           <div class="lp-vis lp-play">
@@ -728,18 +744,18 @@ body:has(#proof.immersive) #demo{display:none}
             </svg>
           </div>
           <div class="lp-n">02</div>
-          <h3>Read the play</h3>
-          <p>See each path from a stranger, through an agent and a key, to your customer data.</p>
+          <h3>See the paths</h3>
+          <p>Each path runs from text a stranger wrote, through an agent and a key, to your customer data.</p>
         </article>
         <article class="lp-card lp-tilt" data-lp-reveal>
           <div class="lp-vis lp-sms" id="lpSms">
-            <div class="b in">Picked off: a webpage tried to steer your agent toward your AWS keys. Reply LOCK.</div>
-            <div class="b out">LOCK</div>
-            <div class="b in">Locked. Nothing left your machine.</div>
+            <div class="b in">Finding: your AWS credentials file is readable by other users.</div>
+            <div class="b out">Fix</div>
+            <div class="b in">Locked to you only. Old setting saved. Undo any time.</div>
           </div>
           <div class="lp-n">03</div>
-          <h3>Pick it off</h3>
-          <p>Pickoff holds the risky action and texts you. One word locks the agent or rotates the key.</p>
+          <h3>Close them</h3>
+          <p>Each finding says where to cut the path. Simple fixes apply in one click, with an undo.</p>
         </article>
       </div>
     </div>
@@ -747,11 +763,11 @@ body:has(#proof.immersive) #demo{display:none}
 
   <section class="lp-sec lp-alt" id="lp-proof">
     <div class="lp-wrap">
-      <div class="lp-eyebrow">Proof, not alerts</div>
-      <h2>Watch the attack work.<br>Then watch it fail.</h2>
-      <p class="lp-lede">Pickoff runs each path against a sandbox copy of your setup with decoy keys, records it, closes it, and runs it again.</p>
+      <div class="lp-eyebrow">Attack paths</div>
+      <h2>See how the attack<br>would run.</h2>
+      <p class="lp-lede">Pickoff lays out each path step by step, so you can see why it works and where to cut it. The path below is a scripted example on a fictional company.</p>
       <div class="hero-card" data-lp-reveal>
-        <div class="cap"><b>A webpage can make an agent read your customer data</b><span class="tagx red">Proven in a sandbox: worked in 14 seconds</span></div>
+        <div class="cap"><b>A webpage can make an agent read your customer data</b><span class="tagx red">Scripted example</span></div>
         <div id="heroRoute"></div>
       </div>
     </div>
@@ -762,7 +778,7 @@ body:has(#proof.immersive) #demo{display:none}
       <div data-lp-reveal>
         <div class="lp-eyebrow">The free scan</div>
         <h2>Get your<br>scouting report.</h2>
-        <p class="lp-lede">One command, about five minutes. It ends with a score and every path from the outside to your data.</p>
+        <p class="lp-lede">One command. It ends with a score and every path from the outside to your data.</p>
         <ul class="lp-checks">
           <li><b>Agent and tool settings</b><span>Claude, Codex, Cursor, Grok Bot</span></li>
           <li><b>Keys in plain text</b><span>cloud, npm, GitHub and Docker credentials</span></li>
@@ -770,7 +786,7 @@ body:has(#proof.immersive) #demo{display:none}
           <li><b>.env files</b><span>flagged higher inside a git repo</span></li>
         </ul>
         <div class="lp-cta">
-          <button class="lp-btn" type="button" onclick="startConnect()">Scan my stack</button>
+          <button class="lp-btn" type="button" onclick="startConnect()">Try the demo</button>
           <button class="lp-cmd" type="button" data-lp-copy="npx github:uda-eth/pickoff"><span>$ npx github:uda-eth/pickoff</span><em>Copy</em></button>
         </div>
       </div>
@@ -787,14 +803,14 @@ body:has(#proof.immersive) #demo{display:none}
             </div>
           </div>
           <ul class="lp-rp-l">
-            <li><i class="c"></i><span>A webpage can make an agent read customer data</span><em>Pick off</em></li>
-            <li><i class="c"></i><span>A cloud key copied to an agent’s machine</span><em>Pick off</em></li>
-            <li><i class="h"></i><span>A live payment key in an agent’s tool settings</span><em>Pick off</em></li>
+            <li><i class="c"></i><span>A webpage can make an agent read customer data</span><em>Fix</em></li>
+            <li><i class="c"></i><span>A cloud key copied to an agent’s machine</span><em>Fix</em></li>
+            <li><i class="h"></i><span>A live payment key in an agent’s tool settings</span><em>Fix</em></li>
           </ul>
           <div class="lp-rp-f"><span>Sample report</span><span>Acme Labs is fictional</span></div>
         </div>
-        <div class="lp-chip3d c1"><i></i>5 agents covered</div>
-        <div class="lp-chip3d c2"><i></i>Picked off · 3:12 AM</div>
+        <div class="lp-chip3d c1"><i></i>5 agents audited</div>
+        <div class="lp-chip3d c2"><i></i>Every fix has an undo</div>
       </div>
     </div>
   </section>
@@ -838,7 +854,7 @@ body:has(#proof.immersive) #demo{display:none}
         <div data-lp-reveal><h4>What you already get</h4><ul>
           <li>“Secret found in repo”</li><li>“Vulnerable dependency”</li><li>One repo at a time, after the fact</li><li>An email nobody reads</li></ul></div>
         <div class="us" data-lp-reveal><h4>What only Pickoff shows</h4><ul>
-          <li>The whole path: stranger → agent → key → customer data</li><li>A recording of the attack working, then failing</li><li>What your cloud agents hold that no scanner can see</li><li>A text you can answer with one word</li></ul></div>
+          <li>The whole path: stranger → agent → key → customer data</li><li>Which agent holds which key, in one report</li><li>Agent and tool settings that code scanners skip</li><li>Fixes you can undo</li></ul></div>
       </div>
     </div>
   </section>
@@ -852,7 +868,7 @@ body:has(#proof.immersive) #demo{display:none}
         <article data-lp-reveal><i>01</i><h3>Read-only</h3><p>The scan only reads. Nothing changes until you say so.</p></article>
         <article data-lp-reveal><i>02</i><h3>Runs on your machine</h3><p>The scan and the dashboard run locally, on your own computer.</p></article>
         <article data-lp-reveal><i>03</i><h3>Secrets stay masked</h3><p>Pickoff never prints or uploads a secret’s value. Findings show a masked preview only.</p></article>
-        <article data-lp-reveal><i>04</i><h3>You approve each tool</h3><p>You choose what Pickoff can read, one tool at a time.</p></article>
+        <article data-lp-reveal><i>04</i><h3>Runs only when you run it</h3><p>Pickoff is an audit, not a background service. Quit it and nothing keeps running.</p></article>
         <article data-lp-reveal><i>05</i><h3>Every fix has an undo</h3><p>Each fix keeps a backup, and one click restores the original file.</p></article>
       </div>
       <p class="lp-founder" data-lp-reveal>Built by Tony Udotong, a former cornerback who runs teams of AI agents every day.</p>
@@ -863,11 +879,11 @@ body:has(#proof.immersive) #demo{display:none}
     <div class="lp-wrap">
       <h2>Who’s covering<br><span>your agents?</span></h2>
       <div class="lp-cta lp-center">
-        <button class="lp-btn" type="button" onclick="startConnect()">Cover my agents</button>
+        <button class="lp-btn" type="button" onclick="startConnect()">Try the demo</button>
         <button class="lp-cmd" type="button" data-lp-copy="npx github:uda-eth/pickoff"><span>$ npx github:uda-eth/pickoff</span><em>Copy</em></button>
       </div>
-      <div class="lp-facts lp-center"><span>Read-only</span><span>Runs on your machine</span><span>Every fix has an undo</span></div>
-      <footer class="lp-foot"><div class="logo"><i></i>Pickoff</div><span>Hackathon demo, November 2026. Acme Labs and its data are fictional.</span></footer>
+      <div class="lp-facts lp-center"><span>Read-only</span><span>Runs on your machine</span><span>Runs only when you run it</span><span>Every fix has an undo</span></div>
+      <footer class="lp-foot"><div class="logo"><i></i>Pickoff</div><span>Built at a hackathon, November 2026. The demo is scripted and Acme Labs is fictional. Live blocking and text alerts are not built yet.</span></footer>
     </div>
   </section>
 </div>
@@ -2154,7 +2170,7 @@ function count(el,n,ms,pre='',suf=''){
   const fmt=v=>pre+Math.round(v).toLocaleString('en-US')+suf;if(reduce){el.textContent=fmt(n);return}
   const t0=performance.now();(function f(now){const u=Math.min(1,(now-t0)/ms);el.textContent=fmt(n*(1-Math.pow(1-u,3)));if(u<1)requestAnimationFrame(f)})(t0);
 }
-const TL=[['$ npx github:uda-eth/pickoff',''],['✓ Claude Code      2 agents','ok'],['✓ Codex cloud      1 task queue','ok'],['✓ Cursor           5 tools','ok'],['✓ Grok Bot         3 routines','ok'],['5 agents covered · read-only','dim']];
+const TL=[['$ npx github:uda-eth/pickoff',''],['✓ Claude Code      2 agents','ok'],['✓ Codex cloud      1 task queue','ok'],['✓ Cursor           5 tools','ok'],['✓ Grok Bot         3 routines','ok'],['5 agents found · read-only','dim']];
 let termRun=0;
 async function term(){
   const my=++termRun,b=q('#lpTermB');b.textContent='';
